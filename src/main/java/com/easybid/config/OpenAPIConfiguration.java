@@ -1,4 +1,4 @@
-package com.easybid;
+package com.easybid.config;
 
 import java.util.List;
 
