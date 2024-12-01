@@ -1,5 +1,7 @@
 package com.easybid.Users;
 
+import com.easybid.Users.dto.UpdateUserDTO;
+import com.easybid.auth.PasswordHasher;
 import com.easybid.common.BaseEntity;
 import com.easybid.enums.UsersRole;
 
@@ -13,13 +15,9 @@ import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
-@Getter
-@Setter
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,7 +29,7 @@ public class UserEntity extends BaseEntity {
   @Column(nullable = false, length = 255)
   private String name;
 
-  @Column(nullable = false, length = 255)
+  @Column(nullable = false, length = 255, unique = true)
   @Email
   private String email;
 
@@ -47,4 +45,26 @@ public class UserEntity extends BaseEntity {
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
   private UsersRole role;
+
+  public void updateFromDTO(UpdateUserDTO dto, PasswordHasher passwordHasher) {
+    if (dto.getName() != null && !dto.getName().isBlank()) {
+      this.setName(dto.getName());
+    }
+    if (dto.getEmail() != null && !dto.getEmail().isBlank()) {
+      this.setEmail(dto.getEmail());
+    }
+    if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+      this.setHashPassword(passwordHasher.hash(dto.getPassword()));
+    }
+    if (dto.getAddress() != null && !dto.getAddress().isBlank()) {
+      this.setAddress(dto.getAddress());
+    }
+    if (dto.getPhoneNumber() != null && !dto.getPhoneNumber().isBlank()) {
+      this.setPhoneNumber(dto.getPhoneNumber());
+    }
+    if (dto.getRole() != null) {
+      this.setRole(dto.getRole());
+    }
+  }
+
 }
