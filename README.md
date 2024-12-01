@@ -90,8 +90,8 @@ A user-friendly platform enabling buyers and sellers to auction or purchase anti
 ### **Step 1: Clone the Repository**
 
 ```bash
-git clone https://github.com/KashifKhn/antique-auction-platform.git
-cd antique-auction-platform
+git clone https://github.com/KashifKhn/easybid_java_spring
+cd easybid_java_spring
 ```
 
 ---
@@ -100,7 +100,7 @@ cd antique-auction-platform
 
 1. Navigate to the backend directory:
    ```bash
-   cd backend
+   cd easybid_java_spring
    ```
 2. Build the Spring Boot application:
    ```bash
@@ -134,6 +134,7 @@ cd antique-auction-platform
 
 - **Frontend**: [http://localhost:3000](http://localhost:3000)
 - **Backend API**: [http://localhost:8080/api/v1](http://localhost:8080/api/v1)
+- **Backend Open API Doc (swagger)**: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
 ## **Contributing**
 
