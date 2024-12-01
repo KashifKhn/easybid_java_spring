@@ -9,9 +9,10 @@
 
 #### **User Management**
 
-- `GET /api/v1/users/me`: Fetch current user details.
-- `PUT /api/v1/users/me`: Update user profile.
-- `DELETE /api/v1/users/me`: Delete user account.
+- `GET /api/v1/users`: Fetch all user details.
+- `GET /api/v1/users/:userId`: Fetch current user details.
+- `PATCH /api/v1/users`: Update user profile.
+- `DELETE /api/v1/users/:userId`: Delete user account.
 
 #### **Item Endpoints**
 
@@ -47,7 +48,7 @@
 #### **Notification Endpoints**
 
 - `GET /api/v1/notifications`: List all notifications for a user.
-- `PUT /api/v1/notifications/{notification_id}`: Mark as read.
+- `PATCH /api/v1/notifications/{notification_id}`: Mark as read.
 - `DELETE /api/v1/notifications/{notification_id}`: Delete a notification.
 
 #### **Admin Endpoints**
