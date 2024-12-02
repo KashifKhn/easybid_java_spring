@@ -1,4 +1,4 @@
-package com.easybid.Users;
+package com.easybid.user;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.easybid.Users.dto.CreateUserDTO;
-import com.easybid.Users.dto.UpdateUserDTO;
-import com.easybid.Users.dto.UserResponseDTO;
+import com.easybid.user.dto.CreateUserDTO;
+import com.easybid.user.dto.UpdateUserDTO;
+import com.easybid.user.dto.UserResponseDTO;
 import com.easybid.auth.PasswordHasher;
 import com.easybid.exceptions.DataConflictException;
 import com.easybid.exceptions.ResourceNotFoundException;

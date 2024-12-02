@@ -1,6 +1,6 @@
-package com.easybid.Users;
+package com.easybid.user;
 
-import com.easybid.Users.dto.UpdateUserDTO;
+import com.easybid.user.dto.UpdateUserDTO;
 import com.easybid.auth.PasswordHasher;
 import com.easybid.common.BaseEntity;
 import com.easybid.enums.UsersRole;

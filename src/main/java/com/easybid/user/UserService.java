@@ -1,8 +1,8 @@
-package com.easybid.Users;
+package com.easybid.user;
 
-import com.easybid.Users.dto.CreateUserDTO;
-import com.easybid.Users.dto.UpdateUserDTO;
-import com.easybid.Users.dto.UserResponseDTO;
+import com.easybid.user.dto.CreateUserDTO;
+import com.easybid.user.dto.UpdateUserDTO;
+import com.easybid.user.dto.UserResponseDTO;
 
 import java.util.List;
 import java.util.UUID;

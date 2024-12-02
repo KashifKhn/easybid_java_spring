@@ -1,4 +1,4 @@
-package com.easybid.Users;
+package com.easybid.user;
 
 import java.util.List;
 import java.util.UUID;
@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import com.easybid.Users.dto.CreateUserDTO;
-import com.easybid.Users.dto.UpdateUserDTO;
-import com.easybid.Users.dto.UserResponseDTO;
+import com.easybid.user.dto.CreateUserDTO;
+import com.easybid.user.dto.UpdateUserDTO;
+import com.easybid.user.dto.UserResponseDTO;
 
 @RestController
 @RequestMapping("api/v1")

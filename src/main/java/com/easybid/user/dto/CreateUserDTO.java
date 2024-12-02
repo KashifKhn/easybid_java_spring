@@ -1,4 +1,4 @@
-package com.easybid.Users.dto;
+package com.easybid.user.dto;
 
 import com.easybid.enums.UsersRole;
 

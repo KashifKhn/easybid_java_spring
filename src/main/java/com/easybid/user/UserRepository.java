@@ -1,4 +1,4 @@
-package com.easybid.Users;
+package com.easybid.user;
 
 import java.util.List;
 import java.util.Optional;
