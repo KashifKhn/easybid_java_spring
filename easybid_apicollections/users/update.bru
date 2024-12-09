@@ -6,10 +6,18 @@ meta {
 
 patch {
   url: http://localhost:8080/api/v1/users/:id
-  body: none
+  body: json
   auth: none
 }
 
 params:path {
-  id: 7755cd61-92ca-400f-9549-90d39ad5a3be
+  id: 6c0d9445-7ddb-4c33-b3aa-007dbb26ee12
+}
+
+body:json {
+  {
+    "name": "John Doe1",
+    "password": "securePassword1234",
+    "role": "SELLER"
+  }
 }
