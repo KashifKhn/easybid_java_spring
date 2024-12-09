@@ -14,6 +14,14 @@
 - `PATCH /api/v1/users`: Update user profile.
 - `DELETE /api/v1/users/:userId`: Delete user account.
 
+#### **Category Management**
+
+- `GET /api/v1/categories`: Fetch all categories.
+- `GET /api/v1/categories/:categoryId`: Fetch details of a specific category.
+- `POST /api/v1/categories`: Create a new category.
+- `PATCH /api/v1/categories/:categoryId`: Update category details.
+- `DELETE /api/v1/categories/:categoryId`: Delete a category.
+
 #### **Item Endpoints**
 
 - `POST /api/v1/items`: Create a new item.
