@@ -2,14 +2,21 @@ server:
   port: 8080
 
 spring:
-  security:
-    enabled: false
   application:
     name: easybid
+  security:
+    enabled: false
   datasource:
-    url: jdbc:postgresql://localhost:5432/easybid_db
-    username: easybid
-    password: admin
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/easybid_db}
+    username: ${DB_USERNAME:easybid}
+    password: ${DB_PASSWORD:admin}
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      pool-name: EasyBidHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
   jpa:
     hibernate:
       ddl-auto: update
@@ -21,6 +28,17 @@ spring:
   main:
     web-application-type: servlet
 
+file:
+  storage:
+    base-url: ${FILE_STORAGE_BASE_URL:http://localhost:8080/uploads/}
+
 springdoc:
   api-docs:
     path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    root: INFO
+    org.hibernate.SQL: DEBUG
