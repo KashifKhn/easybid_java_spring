@@ -62,6 +62,31 @@ public class GlobalExceptionHandler {
     return buildErrorResponse(errorMessage, HttpStatus.BAD_REQUEST);
   }
 
+  @ExceptionHandler(BadRequestException.class)
+  public ResponseEntity<ErrorResponse> handleBadRequest(BadRequestException ex) {
+    return buildErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(InternalServerErrorException.class)
+  public ResponseEntity<ErrorResponse> handleInternalServerError(InternalServerErrorException ex) {
+    return buildErrorResponse(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  @ExceptionHandler(FileSizeExceededException.class)
+  public ResponseEntity<ErrorResponse> handleFileSizeExceeded(FileSizeExceededException ex) {
+    return buildErrorResponse(ex.getMessage(), HttpStatus.PAYLOAD_TOO_LARGE);
+  }
+
+  @ExceptionHandler(UnsupportedFileFormatException.class)
+  public ResponseEntity<ErrorResponse> handleUnsupportedFileFormat(UnsupportedFileFormatException ex) {
+    return buildErrorResponse(ex.getMessage(), HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+  }
+
+  @ExceptionHandler(FileStorageException.class)
+  public ResponseEntity<ErrorResponse> handleFileStorage(FileStorageException ex) {
+    return buildErrorResponse(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ErrorResponse> handleAllOtherExceptions(Exception ex) {
     return buildErrorResponse("An unexpected error occurred.", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -71,4 +96,5 @@ public class GlobalExceptionHandler {
     ErrorResponse error = new ErrorResponse(message, status.value(), LocalDateTime.now());
     return ResponseEntity.status(status).body(error);
   }
+
 }
