@@ -50,7 +50,7 @@ public class UserController {
   @DeleteMapping("/users/{userId}")
   public ResponseEntity<String> deleteUser(@PathVariable final UUID userId) {
     this.userService.deleteUser(userId);
-    return ResponseEntity.ok("User Delete");
+    return ResponseEntity.ok("User Delete Successfuly");
   }
 
 }

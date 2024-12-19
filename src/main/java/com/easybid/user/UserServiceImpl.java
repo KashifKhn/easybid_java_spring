@@ -13,6 +13,7 @@ import com.easybid.user.dto.UserResponseDTO;
 import com.easybid.auth.PasswordHasher;
 import com.easybid.exceptions.DataConflictException;
 import com.easybid.exceptions.ResourceNotFoundException;
+import com.easybid.mapper.UserMapper;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -38,30 +39,29 @@ public class UserServiceImpl implements UserService {
     userEntity.setPhoneNumber(createUserDTO.getPhoneNumber());
     userEntity.setRole(createUserDTO.getRole());
     this.userRepository.save(userEntity);
-    return convertUserToUserResponseDTO(userEntity);
+    return UserMapper.toUserResponseDTO(userEntity);
   }
 
   @Override
   public UserResponseDTO updateUser(final UUID userId, final UpdateUserDTO updateUserDTO) {
     final UserEntity user = this.findUserById(userId);
     System.out.println("befor: " + user.getHashPassword());
-    user.updateFromDTO(updateUserDTO, this.passwordHasher);
+    UserMapper.updateEntityFromDTO(user, updateUserDTO, this.passwordHasher);
     this.userRepository.save(user);
     System.out.println("after : " + user.getHashPassword());
-    return convertUserToUserResponseDTO(user);
+    return UserMapper.toUserResponseDTO(user);
   }
 
   @Override
   public UserResponseDTO getUserById(final UUID userId) {
-    final UserResponseDTO responseDTO = convertUserToUserResponseDTO(findUserById(userId));
-    return responseDTO;
+    return UserMapper.toUserResponseDTO(findUserById(userId));
   }
 
   @Override
   public List<UserResponseDTO> getAllUsers() {
     final List<UserEntity> users = this.userRepository.findAllActiveUsers();
     final List<UserResponseDTO> responseDTOs = users.stream()
-        .map(this::convertUserToUserResponseDTO)
+        .map(UserMapper::toUserResponseDTO)
         .collect(Collectors.toList());
     return responseDTOs;
   }
@@ -77,20 +77,6 @@ public class UserServiceImpl implements UserService {
     final UserEntity user = this.userRepository.findActiveUserById(userId)
         .orElseThrow(() -> new ResourceNotFoundException("User not found for ID: " + userId));
     return user;
-  }
-
-  private UserResponseDTO convertUserToUserResponseDTO(final UserEntity userEntity) {
-    final UserResponseDTO userResponseDTO = new UserResponseDTO();
-    userResponseDTO.setId(userEntity.getId());
-    userResponseDTO.setName(userEntity.getName());
-    userResponseDTO.setEmail(userEntity.getEmail());
-    userResponseDTO.setPhoneNumber(userEntity.getPhoneNumber());
-    userResponseDTO.setRole(userEntity.getRole());
-    userResponseDTO.setAddress(userEntity.getAddress());
-    userResponseDTO.setCreatedAt(userEntity.getCreatedAt());
-    userResponseDTO.setUpdatedAt(userEntity.getUpdatedAt());
-    userResponseDTO.setDeletedAt(userEntity.getDeletedAt());
-    return userResponseDTO;
   }
 
 }
