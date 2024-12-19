@@ -1,6 +1,6 @@
 package com.easybid.category;
 
-import java.util.Set;
+import java.util.List;
 
 import com.easybid.category.dto.UpdateCategoryDTO;
 import com.easybid.common.BaseEntity;
@@ -35,17 +35,6 @@ public class CategoryEntity extends BaseEntity {
   private Boolean isActive;
 
   @OneToMany(mappedBy = "category")
-  private Set<ItemEntity> items;
+  private List<ItemEntity> items;
 
-  public void updateFromDTO(UpdateCategoryDTO dto) {
-    if (dto.getName() != null && !dto.getName().isBlank()) {
-      this.setName(dto.getName());
-    }
-    if (dto.getDescription() != null && !dto.getDescription().isBlank()) {
-      this.setDescription(dto.getDescription());
-    }
-    if (dto.getIsActive() != null) {
-      this.setIsActive(dto.getIsActive());
-    }
-  }
 }

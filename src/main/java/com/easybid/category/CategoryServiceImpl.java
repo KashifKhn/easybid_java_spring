@@ -11,6 +11,7 @@ import com.easybid.category.dto.CategoryResponseDto;
 import com.easybid.category.dto.CreateCategoryDTO;
 import com.easybid.category.dto.UpdateCategoryDTO;
 import com.easybid.exceptions.ResourceNotFoundException;
+import com.easybid.mapper.CategoryMapper;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -30,28 +31,28 @@ public class CategoryServiceImpl implements CategoryService {
     category.setDescription(createCategoryDTO.getDescription());
     category.setIsActive(createCategoryDTO.getIsActive());
     this.categoryRepository.save(category);
-    return mapToCategoryResponseDto(category);
+    return CategoryMapper.toCategoryResponseDto(category);
   }
 
   @Override
   public CategoryResponseDto updateCategory(UUID categoryId,
       UpdateCategoryDTO updateUserDTO) {
     CategoryEntity category = this.findCategoryById(categoryId);
-    category.updateFromDTO(updateUserDTO);
+    CategoryMapper.updateEntityFromDTO(category, updateUserDTO);
     this.categoryRepository.save(category);
-    return mapToCategoryResponseDto(category);
+    return CategoryMapper.toCategoryResponseDto(category);
   }
 
   @Override
   public CategoryResponseDto getCategoryById(UUID categoryId) {
-    return mapToCategoryResponseDto(findCategoryById(categoryId));
+    return CategoryMapper.toCategoryResponseDto(findCategoryById(categoryId));
   }
 
   @Override
   public List<CategoryResponseDto> getAllCategories() {
     List<CategoryEntity> categories = this.categoryRepository.findAll();
     return categories.stream()
-        .map(this::mapToCategoryResponseDto)
+        .map(CategoryMapper::toCategoryResponseDto)
         .collect(Collectors.toList());
   }
 
@@ -59,7 +60,7 @@ public class CategoryServiceImpl implements CategoryService {
   public List<CategoryResponseDto> getAllCategories(Boolean isActive) {
     List<CategoryEntity> categories = this.categoryRepository.findByDeletedAtIsNullAndIsActive(isActive);
     return categories.stream()
-        .map(this::mapToCategoryResponseDto)
+        .map(CategoryMapper::toCategoryResponseDto)
         .collect(Collectors.toList());
   }
 
@@ -74,18 +75,6 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryEntity category = this.categoryRepository.findById(categoryId)
         .orElseThrow(() -> new ResourceNotFoundException("Category not found for ID: " + categoryId));
     return category;
-  }
-
-  private CategoryResponseDto mapToCategoryResponseDto(CategoryEntity categoryEntity) {
-    CategoryResponseDto categoryResponseDto = new CategoryResponseDto();
-    categoryResponseDto.setId(categoryEntity.getId());
-    categoryResponseDto.setName(categoryEntity.getName());
-    categoryResponseDto.setDescription(categoryEntity.getDescription());
-    categoryResponseDto.setIsActive(categoryEntity.getIsActive());
-    categoryResponseDto.setCreatedAt(categoryEntity.getCreatedAt());
-    categoryResponseDto.setUpdatedAt(categoryEntity.getUpdatedAt());
-    categoryResponseDto.setDeletedAt(categoryEntity.getDeletedAt());
-    return categoryResponseDto;
   }
 
 }
