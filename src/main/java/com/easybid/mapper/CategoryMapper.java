@@ -6,7 +6,7 @@ import com.easybid.category.dto.UpdateCategoryDTO;
 
 public class CategoryMapper {
 
-  public static CategoryResponseDto toCategoryResponseDto(CategoryEntity categoryEntity) {
+  public static CategoryResponseDto toCategoryResponseDTO(CategoryEntity categoryEntity) {
     CategoryResponseDto categoryResponseDto = new CategoryResponseDto();
     categoryResponseDto.setId(categoryEntity.getId());
     categoryResponseDto.setName(categoryEntity.getName());

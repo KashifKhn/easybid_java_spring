@@ -31,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
     category.setDescription(createCategoryDTO.getDescription());
     category.setIsActive(createCategoryDTO.getIsActive());
     this.categoryRepository.save(category);
-    return CategoryMapper.toCategoryResponseDto(category);
+    return CategoryMapper.toCategoryResponseDTO(category);
   }
 
   @Override
@@ -40,19 +40,19 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryEntity category = this.findCategoryById(categoryId);
     CategoryMapper.updateEntityFromDTO(category, updateUserDTO);
     this.categoryRepository.save(category);
-    return CategoryMapper.toCategoryResponseDto(category);
+    return CategoryMapper.toCategoryResponseDTO(category);
   }
 
   @Override
   public CategoryResponseDto getCategoryById(UUID categoryId) {
-    return CategoryMapper.toCategoryResponseDto(findCategoryById(categoryId));
+    return CategoryMapper.toCategoryResponseDTO(findCategoryById(categoryId));
   }
 
   @Override
   public List<CategoryResponseDto> getAllCategories() {
     List<CategoryEntity> categories = this.categoryRepository.findAll();
     return categories.stream()
-        .map(CategoryMapper::toCategoryResponseDto)
+        .map(CategoryMapper::toCategoryResponseDTO)
         .collect(Collectors.toList());
   }
 
@@ -60,7 +60,7 @@ public class CategoryServiceImpl implements CategoryService {
   public List<CategoryResponseDto> getAllCategories(Boolean isActive) {
     List<CategoryEntity> categories = this.categoryRepository.findByDeletedAtIsNullAndIsActive(isActive);
     return categories.stream()
-        .map(CategoryMapper::toCategoryResponseDto)
+        .map(CategoryMapper::toCategoryResponseDTO)
         .collect(Collectors.toList());
   }
 
