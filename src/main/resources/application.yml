@@ -1,6 +1,9 @@
 server:
   port: 8080
 
+app:
+  base-url: ${FILE_STORAGE_BASE_URL:http://localhost:8080/}
+
 spring:
   application:
     name: easybid
@@ -27,10 +30,17 @@ spring:
     show-sql: true
   main:
     web-application-type: servlet
+  web:
+    resources:
+      add-mapping: false
+  resource:
+    static-locations: classpath:/static/, classpath:/public/, classpath:/uploads/
+  mvc:
+    throw-exception-if-no-handler-found: true
 
 file:
   storage:
-    base-url: ${FILE_STORAGE_BASE_URL:http://localhost:8080/uploads/}
+    type: LOCAL
 
 springdoc:
   api-docs:
