@@ -2,9 +2,9 @@ package com.easybid.category;
 
 import java.util.List;
 
-import com.easybid.category.dto.UpdateCategoryDTO;
 import com.easybid.common.BaseEntity;
 import com.easybid.item.ItemEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -35,6 +35,7 @@ public class CategoryEntity extends BaseEntity {
   private Boolean isActive;
 
   @OneToMany(mappedBy = "category")
+  @JsonManagedReference
   private List<ItemEntity> items;
 
 }
