@@ -1,6 +1,7 @@
 package com.easybid.category;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +14,6 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, UUID> 
 
   List<CategoryEntity> findByDeletedAtIsNull();
 
-  CategoryEntity findByIdAndDeletedAtIsNull(UUID categoryId);
+  Optional<CategoryEntity> findByIdAndDeletedAtIsNull(UUID categoryId);
 
 }

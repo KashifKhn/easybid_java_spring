@@ -72,7 +72,7 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   private CategoryEntity findCategoryById(UUID categoryId) {
-    CategoryEntity category = this.categoryRepository.findById(categoryId)
+    CategoryEntity category = this.categoryRepository.findByIdAndDeletedAtIsNull(categoryId)
         .orElseThrow(() -> new ResourceNotFoundException("Category not found for ID: " + categoryId));
     return category;
   }
