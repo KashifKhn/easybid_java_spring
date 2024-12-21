@@ -47,7 +47,7 @@ public class ItemServiceImpl implements ItemService {
 
   @Override
   public List<ItemResponseDTO> getAllItem() {
-    final List<ItemEntity> items = this.itemRepository.findAll();
+    final List<ItemEntity> items = this.itemRepository.findByDeletedAtIsNull();
     final List<ItemResponseDTO> itemRes = items.stream()
         .map(ItemMapper::toItemResponseDTO)
         .collect(Collectors.toList());
@@ -84,7 +84,7 @@ public class ItemServiceImpl implements ItemService {
   }
 
   private ItemEntity findItemById(final UUID itemId) {
-    return this.itemRepository.findById(itemId)
+    return this.itemRepository.findByIdAndDeletedAtIsNull(itemId)
         .orElseThrow(() -> new ResourceNotFoundException("Item not found for ID: " + itemId));
   }
 
