@@ -21,7 +21,7 @@ import com.easybid.item.dto.CreateItemDTO;
 import com.easybid.item.dto.ItemResponseDTO;
 import com.easybid.item.dto.UpdateItemDTO;
 
-@RequestMapping("/api/v1/items")
+@RequestMapping("/api/v1")
 @RestController
 @Controller
 public class ItemController {
@@ -31,7 +31,10 @@ public class ItemController {
     this.itemService = itemService;
   }
 
-  @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+  @PostMapping(value = "/items", consumes =
+
+  { MediaType.MULTIPART_FORM_DATA_VALUE })
+
   public ResponseEntity<ItemResponseDTO> createItem(
       CreateItemDTO createItemDTO,
       @RequestPart("files") MultipartFile[] files) {
@@ -40,19 +43,19 @@ public class ItemController {
     return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
   }
 
-  @GetMapping()
+  @GetMapping("/items")
   public ResponseEntity<List<ItemResponseDTO>> getAllItem() {
     List<ItemResponseDTO> items = this.itemService.getAllItem();
     return ResponseEntity.ok(items);
   }
 
-  @GetMapping("/{itemId}")
+  @GetMapping("/items/{itemId}")
   public ResponseEntity<ItemResponseDTO> getItemById(@PathVariable UUID itemId) {
     ItemResponseDTO item = this.itemService.getItemById(itemId);
     return ResponseEntity.ok(item);
   }
 
-  @PatchMapping(value = "/{itemId}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+  @PatchMapping(value = "/items/{itemId}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
   public ResponseEntity<ItemResponseDTO> updateItem(
       @PathVariable("itemId") UUID itemId,
       UpdateItemDTO updateItemDTO,
@@ -62,7 +65,7 @@ public class ItemController {
     return ResponseEntity.ok(item);
   }
 
-  @DeleteMapping("/{itemId}")
+  @DeleteMapping("/items/{itemId}")
   public ResponseEntity<String> deleteItem(@PathVariable UUID itemId) {
     this.itemService.deleteItem(itemId);
     return ResponseEntity.ok("Item Deleted Successfully");
