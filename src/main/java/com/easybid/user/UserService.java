@@ -18,4 +18,6 @@ public interface UserService {
   List<UserResponseDTO> getAllUsers();
 
   void deleteUser(UUID userId);
+
+  UserEntity findUserById(final UUID userId);
 }

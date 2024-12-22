@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public List<UserResponseDTO> getAllUsers() {
-    final List<UserEntity> users = this.userRepository.findAllActiveUsers();
+    final List<UserEntity> users = this.userRepository.findByDeletedAtIsNull();
     final List<UserResponseDTO> responseDTOs = users.stream()
         .map(UserMapper::toUserResponseDTO)
         .collect(Collectors.toList());
@@ -73,8 +73,9 @@ public class UserServiceImpl implements UserService {
     this.userRepository.save(user);
   }
 
-  private UserEntity findUserById(final UUID userId) {
-    final UserEntity user = this.userRepository.findActiveUserById(userId)
+  @Override
+  public UserEntity findUserById(final UUID userId) {
+    final UserEntity user = this.userRepository.findByIdAndDeletedAtIsNull(userId)
         .orElseThrow(() -> new ResourceNotFoundException("User not found for ID: " + userId));
     return user;
   }
