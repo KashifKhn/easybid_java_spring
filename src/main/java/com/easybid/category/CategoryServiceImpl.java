@@ -71,7 +71,8 @@ public class CategoryServiceImpl implements CategoryService {
     this.categoryRepository.save(category);
   }
 
-  private CategoryEntity findCategoryById(UUID categoryId) {
+  @Override
+  public CategoryEntity findCategoryById(UUID categoryId) {
     CategoryEntity category = this.categoryRepository.findByIdAndDeletedAtIsNull(categoryId)
         .orElseThrow(() -> new ResourceNotFoundException("Category not found for ID: " + categoryId));
     return category;

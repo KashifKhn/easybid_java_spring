@@ -21,4 +21,6 @@ public interface CategoryService {
 
   void deleteCategory(UUID categoryId);
 
+  CategoryEntity findCategoryById(UUID categoryId);
+
 }
