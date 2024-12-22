@@ -50,7 +50,7 @@ public class UserEntity extends BaseEntity {
   private UsersRole role;
 
   @OneToMany(mappedBy = "user")
-  @JsonManagedReference
+  @JsonManagedReference("user-item")
   private List<ItemEntity> items;
 
 }
