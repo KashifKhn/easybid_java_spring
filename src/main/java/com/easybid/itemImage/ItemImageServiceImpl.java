@@ -50,7 +50,8 @@ public class ItemImageServiceImpl implements ItemImageService {
     this.itemImageRepository.deleteById(itemImageId);
   }
 
-  private ItemImageEntity findItemImageById(UUID itemImageId) {
+  @Override
+  public ItemImageEntity findItemImageById(UUID itemImageId) {
     return this.itemImageRepository.findById(itemImageId)
         .orElseThrow(() -> new ResourceNotFoundException("Item Image not found for ID: " + itemImageId));
 

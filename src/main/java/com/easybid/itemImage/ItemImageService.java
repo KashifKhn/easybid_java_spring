@@ -11,4 +11,6 @@ public interface ItemImageService {
 
   void deleteItemImage(ItemImageEntity imageEntity);
 
+  ItemImageEntity findItemImageById(UUID itemImageId);
+
 }
