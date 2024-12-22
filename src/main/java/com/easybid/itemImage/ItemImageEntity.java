@@ -20,7 +20,7 @@ public class ItemImageEntity extends BaseEntity {
 
   @ManyToOne
   @JoinColumn(name = "item_id", nullable = false)
-  @JsonBackReference
+  @JsonBackReference("item-image")
   private ItemEntity item;
 
   @Column(nullable = false, length = 255)
