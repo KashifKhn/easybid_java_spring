@@ -1,7 +1,6 @@
 package com.easybid.item.dto;
 
-import com.easybid.category.CategoryEntity;
-import com.easybid.user.UserEntity;
+import java.util.UUID;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -31,11 +30,11 @@ public class CreateItemDTO {
   @Size(max = 255)
   private Double buyNowPrice;
 
-  @NotNull(message = "user must not be null")
-  @Schema(description = "BuyNOwPrice of the Item", example = "69a5223e-b6ca-11ef-8908-03f021d7927c")
-  private UserEntity user;
+  @NotNull(message = "userId must not be null")
+  @Schema(description = "UserId of the Item", example = "69a5223e-b6ca-11ef-8908-03f021d7927c")
+  private UUID userId;
 
-  @NotNull(message = "categroy must not be null")
+  @NotNull(message = "categroyId must not be null")
   @Schema(description = "categoryId of the Item", example = "4dc7b8e2-b6ca-11ef-b524-8f6af1739663")
-  private CategoryEntity category;
+  private UUID categoryId;
 }

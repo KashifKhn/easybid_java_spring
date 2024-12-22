@@ -1,6 +1,6 @@
 package com.easybid.item.dto;
 
-import com.easybid.category.CategoryEntity;
+import java.util.UUID;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Pattern;
@@ -29,6 +29,6 @@ public class UpdateItemDTO {
   @Size(max = 255)
   private Double buyNowPrice;
 
-  @Schema(description = "category of the Item")
-  private CategoryEntity category;
+  @Schema(description = "categoryId of the Item")
+  private UUID categoryId;
 }
