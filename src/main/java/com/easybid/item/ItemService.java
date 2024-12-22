@@ -17,7 +17,10 @@ public interface ItemService {
 
   ItemResponseDTO getItemById(UUID itemId);
 
+  ItemEntity findItemById(UUID itemId);
+
   ItemResponseDTO updateItem(UUID itemId, UpdateItemDTO updateItemDTO, MultipartFile[] files);
 
   void deleteItem(UUID itemId);
+
 }
