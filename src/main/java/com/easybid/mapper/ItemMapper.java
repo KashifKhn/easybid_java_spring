@@ -37,8 +37,5 @@ public class ItemMapper {
     if (updateItemDto.getBuyNowPrice() != null && updateItemDto.getBuyNowPrice() >= 0) {
       itemEntity.setBuyNowPrice(updateItemDto.getBuyNowPrice());
     }
-    if (updateItemDto.getCategory() != null) {
-      itemEntity.setCategory(updateItemDto.getCategory());
-    }
   }
 }
