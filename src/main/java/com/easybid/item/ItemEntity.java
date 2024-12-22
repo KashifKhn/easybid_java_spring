@@ -3,6 +3,7 @@ package com.easybid.item;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.easybid.auction.AuctionEntity;
 import com.easybid.category.CategoryEntity;
 import com.easybid.common.BaseEntity;
 import com.easybid.itemImage.ItemImageEntity;
@@ -47,16 +48,20 @@ public class ItemEntity extends BaseEntity {
 
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
-  @JsonBackReference
+  @JsonBackReference("user-item")
   private UserEntity user;
 
   @ManyToOne
   @JoinColumn(name = "category_id", nullable = false)
-  @JsonBackReference
+  @JsonBackReference("category-item")
   private CategoryEntity category;
 
   @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
-  @JsonManagedReference
+  @JsonManagedReference("item-image")
   private List<ItemImageEntity> images = new ArrayList<>();
+
+  @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+  @JsonManagedReference("item-auction")
+  private List<AuctionEntity> auctions = new ArrayList<>();
 
 }
