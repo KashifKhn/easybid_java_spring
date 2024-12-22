@@ -35,7 +35,7 @@ public class CategoryEntity extends BaseEntity {
   private Boolean isActive;
 
   @OneToMany(mappedBy = "category")
-  @JsonManagedReference
+  @JsonManagedReference("category-item")
   private List<ItemEntity> items;
 
 }
