@@ -1,0 +1,24 @@
+meta {
+  name: create
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8080/api/v1/auctions
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "itemId": "a4e323ec-8793-4220-bb92-bf308a41d5cf",
+    "startTime": "2025-12-25T10:00:00",
+    "endTime": "2025-12-25T10:05:00",
+    "type": "FREE",
+    "status": "PENDING",
+    "incrementType": "NONE",
+    "incrementAmount": 5.00,
+    "incrementPercentage": 10
+  }
+}

@@ -1,0 +1,27 @@
+meta {
+  name: update
+  type: http
+  seq: 5
+}
+
+patch {
+  url: http://localhost:8080/api/v1/auctions/:id
+  body: json
+  auth: none
+}
+
+params:path {
+  id: e289c4aa-3805-49f7-8978-dfd6aee6ae12
+}
+
+body:json {
+  {
+    "startTime": "2025-12-25T10:00:00",
+    "endTime": "2025-12-25T10:06:00",
+    "type": "FIXED",
+    "status": "PENDING",
+    "incrementType": "PERCENTAGE",
+    "incrementAmount": 10.00,
+    "incrementPercentage": 5
+  }
+}
