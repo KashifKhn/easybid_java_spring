@@ -1,0 +1,68 @@
+package com.easybid.auction;
+
+import java.time.LocalDateTime;
+
+import com.easybid.common.BaseEntity;
+import com.easybid.enums.AuctionStatus;
+import com.easybid.enums.AuctionType;
+import com.easybid.enums.IncrementType;
+import com.easybid.item.ItemEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Entity
+@Table(name = "auctions")
+public class AuctionEntity extends BaseEntity {
+
+  @NotNull
+  @ManyToOne
+  @JoinColumn(name = "item_id", nullable = false)
+  @JsonBackReference("item-auction")
+  private ItemEntity item;
+
+  @NotNull
+  @Column(nullable = false)
+  @FutureOrPresent
+  private LocalDateTime startTime;
+
+  @NotNull
+  @Column(nullable = false)
+  @Future
+  private LocalDateTime endTime;
+
+  @NotNull
+  @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
+  private AuctionType type;
+
+  @NotNull
+  @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
+  private AuctionStatus status;
+
+  @NotNull
+  @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
+  private IncrementType incrementType;
+
+  @Column()
+  private Double incrementAmount;
+
+  @Column()
+  private Double incrementPercentage;
+
+}
