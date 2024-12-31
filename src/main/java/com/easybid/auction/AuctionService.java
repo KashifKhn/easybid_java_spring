@@ -10,7 +10,7 @@ import com.easybid.auction.dto.UpdateAuctionDTO;
 public interface AuctionService {
   AuctionResponseDTO createAuction(CreateAuctionDTO createAuctionDTO);
 
-  List<AuctionResponseDTO> getAllAuction();
+  List<AuctionResponseDTO> getAuctions(UUID itemId, UUID userId);
 
   AuctionResponseDTO getAuctionById(UUID auctionId);
 

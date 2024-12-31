@@ -40,6 +40,7 @@ public class AuctionServiceImpl implements AuctionService {
     auctionEntity.setEndTime(createAuctionDTO.getEndTime());
     auctionEntity.setType(createAuctionDTO.getType());
     auctionEntity.setStatus(createAuctionDTO.getStatus());
+    auctionEntity.setHighestBid(null);
     if (createAuctionDTO.getType() == AuctionType.FIXED) {
       if (createAuctionDTO.getIncrementType() == IncrementType.NONE) {
         throw new BadRequestException("Increment type must be specified for fixed auctions.");
@@ -82,8 +83,19 @@ public class AuctionServiceImpl implements AuctionService {
   }
 
   @Override
-  public List<AuctionResponseDTO> getAllAuction() {
-    List<AuctionEntity> auctions = this.auctionRepository.findByDeletedAtIsNull();
+  public List<AuctionResponseDTO> getAuctions(UUID itemId, UUID userId) {
+    List<AuctionEntity> auctions;
+
+    if (itemId != null && userId != null) {
+      auctions = auctionRepository.findByItemIdAndUserId(itemId, userId);
+    } else if (itemId != null) {
+      auctions = auctionRepository.findByItemId(itemId);
+    } else if (userId != null) {
+      auctions = auctionRepository.findByItemUserId(userId);
+    } else {
+      auctions = auctionRepository.findByDeletedAtIsNull();
+    }
+
     return auctions.stream()
         .map(AuctionMapper::toAuctionResponseDTO)
         .collect(Collectors.toList());
@@ -125,6 +137,14 @@ public class AuctionServiceImpl implements AuctionService {
   }
 
   private void validateAuctionDates(LocalDateTime startingTime, LocalDateTime endingTime) {
+    LocalDateTime now = LocalDateTime.now();
+
+    if (startingTime.isBefore(now)) {
+      throw new BadRequestException("Start time must not be in the past.");
+    }
+    if (endingTime.isBefore(now)) {
+      throw new BadRequestException("End time must not be in the past.");
+    }
     if (startingTime.isAfter(endingTime)) {
       throw new BadRequestException("Start time must be before end time.");
     }
