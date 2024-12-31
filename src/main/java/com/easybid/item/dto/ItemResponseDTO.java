@@ -26,7 +26,7 @@ public class ItemResponseDTO extends BaseResponseDto {
   private Double startingBid;
 
   @Schema(description = "BuyNOwPrice of the Item", example = "1000.34")
-  private Double buyNOwPrice;
+  private Double buyNowPrice;
 
   @Schema(description = "BuyNOwPrice of the Item", example = "69a5223e-b6ca-11ef-8908-03f021d7927c")
   private UserResponseDTO user;
