@@ -15,11 +15,14 @@ public class AuctionMapper {
     aResponseDTO.setCreatedAt(auctionEntity.getCreatedAt());
     aResponseDTO.setUpdatedAt(auctionEntity.getUpdatedAt());
     aResponseDTO.setDeletedAt(auctionEntity.getDeletedAt());
-    aResponseDTO.setItem(auctionEntity.getItem());
+    aResponseDTO.setItem(ItemMapper.toItemResponseDTO(auctionEntity.getItem()));
     aResponseDTO.setStartTime(auctionEntity.getStartTime());
     aResponseDTO.setEndTime(auctionEntity.getEndTime());
     aResponseDTO.setType(auctionEntity.getType());
     aResponseDTO.setStatus(auctionEntity.getStatus());
+    if (auctionEntity.getHighestBid() != null) {
+      aResponseDTO.setHighestBid(BidMapper.toBidResponseDTO(auctionEntity.getHighestBid()));
+    }
     aResponseDTO.setIncrementType(auctionEntity.getIncrementType());
     aResponseDTO.setIncrementAmount(auctionEntity.getIncrementAmount());
     aResponseDTO.setIncrementPercentage(auctionEntity.getIncrementPercentage());
