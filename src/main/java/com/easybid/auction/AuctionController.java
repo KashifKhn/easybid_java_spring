@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.easybid.auction.dto.AuctionResponseDTO;
@@ -37,8 +38,10 @@ public class AuctionController {
   }
 
   @GetMapping("/auctions")
-  public ResponseEntity<List<AuctionResponseDTO>> getAllAuction() {
-    List<AuctionResponseDTO> auctionRes = this.auctionService.getAllAuction();
+  public ResponseEntity<List<AuctionResponseDTO>> getAuctions(
+      @RequestParam(value = "itemId", required = false) UUID itemId,
+      @RequestParam(value = "userId", required = false) UUID userId) {
+    List<AuctionResponseDTO> auctionRes = this.auctionService.getAuctions(itemId, userId);
     return ResponseEntity.ok(auctionRes);
   }
 
