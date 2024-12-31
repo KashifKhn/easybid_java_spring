@@ -2,11 +2,12 @@ package com.easybid.auction.dto;
 
 import java.time.LocalDateTime;
 
+import com.easybid.bid.dto.BidResponseDTO;
 import com.easybid.common.BaseResponseDto;
 import com.easybid.enums.AuctionStatus;
 import com.easybid.enums.AuctionType;
 import com.easybid.enums.IncrementType;
-import com.easybid.item.ItemEntity;
+import com.easybid.item.dto.ItemResponseDTO;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -18,7 +19,10 @@ import lombok.EqualsAndHashCode;
 public class AuctionResponseDTO extends BaseResponseDto {
 
   @Schema(description = "Item associated with the Auction")
-  private ItemEntity item;
+  private ItemResponseDTO item;
+
+  @Schema(description = "Highes bid")
+  private BidResponseDTO highestBid;
 
   @Schema(description = "Start time of the Auction", example = "2024-12-25T10:00:00")
   private LocalDateTime startTime;
