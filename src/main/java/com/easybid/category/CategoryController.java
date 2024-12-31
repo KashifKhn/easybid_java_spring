@@ -43,7 +43,6 @@ public class CategoryController {
   public ResponseEntity<List<CategoryResponseDto>> getAllCategories(
       @RequestParam(value = "isActive", required = false) Boolean isActive) {
     List<CategoryResponseDto> categories;
-    System.out.println("isActive " + isActive);
     if (isActive == null) {
       categories = this.categoryService.getAllCategories();
     } else {
