@@ -17,7 +17,7 @@ public class ItemMapper {
     responseDTO.setName(item.getName());
     responseDTO.setDescription(item.getDescription());
     responseDTO.setStartingBid(item.getStartingBid());
-    responseDTO.setBuyNOwPrice(item.getBuyNowPrice());
+    responseDTO.setBuyNowPrice(item.getBuyNowPrice());
     responseDTO.setUser(UserMapper.toUserResponseDTO(item.getUser()));
     responseDTO.setCategory(CategoryMapper.toCategoryResponseDTO(item.getCategory()));
     responseDTO.setImages(new ArrayList<>(item.getImages()));
