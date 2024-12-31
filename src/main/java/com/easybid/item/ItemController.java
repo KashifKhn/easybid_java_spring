@@ -31,10 +31,7 @@ public class ItemController {
     this.itemService = itemService;
   }
 
-  @PostMapping(value = "/items", consumes =
-
-  { MediaType.MULTIPART_FORM_DATA_VALUE })
-
+  @PostMapping(value = "/items", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
   public ResponseEntity<ItemResponseDTO> createItem(
       CreateItemDTO createItemDTO,
       @RequestPart("files") MultipartFile[] files) {
