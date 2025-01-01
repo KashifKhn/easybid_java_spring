@@ -2,6 +2,7 @@ package com.easybid.user;
 
 import java.util.List;
 
+import com.easybid.bid.BidEntity;
 import com.easybid.common.BaseEntity;
 import com.easybid.enums.UsersRole;
 import com.easybid.item.ItemEntity;
@@ -52,5 +53,9 @@ public class UserEntity extends BaseEntity {
   @OneToMany(mappedBy = "user")
   @JsonManagedReference("user-item")
   private List<ItemEntity> items;
+
+  @OneToMany(mappedBy = "user")
+  @JsonManagedReference("user-bid")
+  private List<BidEntity> bids;
 
 }
