@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserResponseDTO createUser(final CreateUserDTO createUserDTO) {
-    if (userRepository.findByEmail(createUserDTO.getEmail()).isPresent()) {
+  public UserEntity createUser(final CreateUserDTO createUserDTO) {
+    if (userRepository.findByEmailAndDeletedAtIsNull(createUserDTO.getEmail()).isPresent()) {
       throw new DataConflictException("Email already exists: " + createUserDTO.getEmail());
     }
     final UserEntity userEntity = new UserEntity();
@@ -38,8 +38,9 @@ public class UserServiceImpl implements UserService {
     userEntity.setEmail(createUserDTO.getEmail());
     userEntity.setPhoneNumber(createUserDTO.getPhoneNumber());
     userEntity.setRole(createUserDTO.getRole());
+    userEntity.setBio(createUserDTO.getBio());
     this.userRepository.save(userEntity);
-    return UserMapper.toUserResponseDTO(userEntity);
+    return this.findUserById(userEntity.getId());
   }
 
   @Override
@@ -77,6 +78,13 @@ public class UserServiceImpl implements UserService {
   public UserEntity findUserById(final UUID userId) {
     final UserEntity user = this.userRepository.findByIdAndDeletedAtIsNull(userId)
         .orElseThrow(() -> new ResourceNotFoundException("User not found for ID: " + userId));
+    return user;
+  }
+
+  @Override
+  public UserEntity findUserByEmail(String email) {
+    final UserEntity user = this.userRepository.findByEmailAndDeletedAtIsNull(email)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found for ID: " + email));
     return user;
   }
 

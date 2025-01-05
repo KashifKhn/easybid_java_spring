@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface UserService {
 
-  UserResponseDTO createUser(CreateUserDTO createUserDTO);
+  UserEntity createUser(CreateUserDTO createUserDTO);
 
   UserResponseDTO updateUser(UUID userId, UpdateUserDTO updateUserDTO);
 
@@ -20,4 +20,6 @@ public interface UserService {
   void deleteUser(UUID userId);
 
   UserEntity findUserById(final UUID userId);
+
+  UserEntity findUserByEmail(final String email);
 }
