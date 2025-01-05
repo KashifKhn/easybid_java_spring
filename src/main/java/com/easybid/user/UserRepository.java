@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 
-  Optional<UserEntity> findByEmail(String email);
+  Optional<UserEntity> findByEmailAndDeletedAtIsNull(String email);
 
   List<UserEntity> findByDeletedAtIsNull();
 
