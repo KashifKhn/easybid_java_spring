@@ -1,6 +1,11 @@
 package com.easybid.user;
 
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.easybid.bid.BidEntity;
 import com.easybid.common.BaseEntity;
@@ -28,7 +33,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Schema()
 @Table(name = "users")
-public class UserEntity extends BaseEntity {
+public class UserEntity extends BaseEntity implements UserDetails {
 
   @Column(nullable = false, length = 255)
   private String name;
@@ -40,11 +45,14 @@ public class UserEntity extends BaseEntity {
   @Column(nullable = false, length = 255)
   private String hashPassword;
 
-  @Column(nullable = false, length = 255)
+  @Column(nullable = true, length = 255)
   private String address;
 
   @Column(nullable = true, length = 255)
   private String phoneNumber;
+
+  @Column(nullable = true, length = 255)
+  private String bio;
 
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
@@ -57,5 +65,40 @@ public class UserEntity extends BaseEntity {
   @OneToMany(mappedBy = "user")
   @JsonManagedReference("user-bid")
   private List<BidEntity> bids;
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return List.of(new SimpleGrantedAuthority(role.name()));
+  }
+
+  @Override
+  public String getPassword() {
+    return this.getHashPassword();
+  }
+
+  @Override
+  public String getUsername() {
+    return this.getEmail();
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
 
 }
