@@ -31,4 +31,6 @@ public class UserResponseDTO extends BaseResponseDto {
   @Schema(description = "Role of the user", example = "USER")
   private UsersRole role;
 
+  @Schema(description = "Bio of the user", example = "I love collecting vintage items and participating in auctions.")
+  private String bio;
 }

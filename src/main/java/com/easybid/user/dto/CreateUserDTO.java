@@ -33,7 +33,6 @@ public class CreateUserDTO {
   @Size(max = 255, min = 1)
   private String password;
 
-  @NotBlank(message = "Address must not be null or blank")
   @Schema(description = "Address of the user", example = "123 Main St, Cityville")
   @Size(max = 255, min = 1)
   private String address;
@@ -41,6 +40,10 @@ public class CreateUserDTO {
   @Schema(description = "Phone number of the user", example = "123-456-7890")
   @Size(max = 255)
   private String phoneNumber;
+
+  @Schema(description = "Bio of the user", example = "I love collecting vintage items and participating in auctions.")
+  @Size(max = 255)
+  private String bio;
 
   @NotNull(message = "Role must not be null")
   @Schema(description = "Role of the user", example = "USER")
