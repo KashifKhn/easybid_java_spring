@@ -15,6 +15,7 @@ public class UserMapper {
     userResponseDTO.setPhoneNumber(userEntity.getPhoneNumber());
     userResponseDTO.setRole(userEntity.getRole());
     userResponseDTO.setAddress(userEntity.getAddress());
+    userResponseDTO.setBio(userEntity.getBio());
     userResponseDTO.setCreatedAt(userEntity.getCreatedAt());
     userResponseDTO.setUpdatedAt(userEntity.getUpdatedAt());
     userResponseDTO.setDeletedAt(userEntity.getDeletedAt());
@@ -36,6 +37,9 @@ public class UserMapper {
     }
     if (dto.getPhoneNumber() != null && !dto.getPhoneNumber().isBlank()) {
       userEntity.setPhoneNumber(dto.getPhoneNumber());
+    }
+    if (dto.getBio() != null && !dto.getBio().isBlank()) {
+      userEntity.setBio(dto.getBio());
     }
     if (dto.getRole() != null) {
       userEntity.setRole(dto.getRole());
