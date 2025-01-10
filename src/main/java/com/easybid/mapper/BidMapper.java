@@ -10,7 +10,7 @@ public class BidMapper {
     bid.setId(bidEntity.getId());
     bid.setUser(UserMapper.toUserResponseDTO(bidEntity.getUser()));
     bid.setAmount(bidEntity.getAmount());
-    // bid.setAuction(AuctionMapper.toAuctionResponseDTO(bidEntity.getAuction()));
+    bid.setAuction(bidEntity.getAuction());
     bid.setCreatedAt(bidEntity.getCreatedAt());
     bid.setUpdatedAt(bidEntity.getCreatedAt());
     return bid;
