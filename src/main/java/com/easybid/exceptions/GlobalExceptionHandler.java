@@ -4,9 +4,12 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -20,6 +23,12 @@ public class GlobalExceptionHandler {
     return buildErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
   }
 
+  @ExceptionHandler(NoHandlerFoundException.class)
+  public ResponseEntity<ErrorResponse> handleNoHandlerFound(NoHandlerFoundException ex) {
+    String errorMessage = String.format("The requested URL '%s' was not found on this server.", ex.getRequestURL());
+    return buildErrorResponse(errorMessage, HttpStatus.NOT_FOUND);
+  }
+
   @ExceptionHandler(DataConflictException.class)
   public ResponseEntity<ErrorResponse> handleDataConflict(DataConflictException ex) {
     return buildErrorResponse(ex.getMessage(), HttpStatus.CONFLICT);
@@ -28,6 +37,38 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(AccessForbiddenException.class)
   public ResponseEntity<ErrorResponse> handleForbidden(AccessForbiddenException ex) {
     return buildErrorResponse(ex.getMessage(), HttpStatus.FORBIDDEN);
+  }
+
+  @ExceptionHandler(UnauthorizedException.class)
+  public ResponseEntity<ErrorResponse> handleUnauthorized(UnauthorizedException ex) {
+    return buildErrorResponse(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+  }
+
+  @ExceptionHandler(AuthenticationFailedException.class)
+  public ResponseEntity<ErrorResponse> handleAuthenticationFailed(AuthenticationFailedException ex) {
+    return buildErrorResponse(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+  }
+
+  @ExceptionHandler(TokenExpiredException.class)
+  public ResponseEntity<ErrorResponse> handleTokenExpired(TokenExpiredException ex) {
+    return buildErrorResponse(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+  }
+
+  @ExceptionHandler(InvalidTokenException.class)
+  public ResponseEntity<ErrorResponse> handleInvalidToken(InvalidTokenException ex) {
+    return buildErrorResponse(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+  }
+
+  @ExceptionHandler(BadCredentialsException.class)
+  public ResponseEntity<ErrorResponse> handleBadCredentials(BadCredentialsException ex) {
+    String errorMessage = "Invalid credentials. Please check your username and password.";
+    return buildErrorResponse(errorMessage, HttpStatus.UNAUTHORIZED);
+  }
+
+  @ExceptionHandler(AccessDeniedException.class)
+  public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException ex) {
+    String errorMessage = "You do not have permission to access this resource.";
+    return buildErrorResponse(errorMessage, HttpStatus.FORBIDDEN);
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
