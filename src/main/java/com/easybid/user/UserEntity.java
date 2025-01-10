@@ -11,6 +11,7 @@ import com.easybid.bid.BidEntity;
 import com.easybid.common.BaseEntity;
 import com.easybid.enums.UsersRole;
 import com.easybid.item.ItemEntity;
+import com.easybid.notification.NotificationEntity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -65,6 +66,10 @@ public class UserEntity extends BaseEntity implements UserDetails {
   @OneToMany(mappedBy = "user")
   @JsonManagedReference("user-bid")
   private List<BidEntity> bids;
+
+  @OneToMany(mappedBy = "user")
+  @JsonManagedReference("user-notifications")
+  private List<NotificationEntity> notifications;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

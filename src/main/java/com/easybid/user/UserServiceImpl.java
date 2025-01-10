@@ -46,6 +46,10 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserResponseDTO updateUser(final UUID userId, final UpdateUserDTO updateUserDTO) {
     final UserEntity user = this.findUserById(userId);
+    if (userRepository.findByEmailAndDeletedAtIsNull(updateUserDTO.getEmail()).isPresent()
+        && !user.getEmail().equals(updateUserDTO.getEmail())) {
+      throw new DataConflictException("Email already exists: " + updateUserDTO.getEmail());
+    }
     System.out.println("befor: " + user.getHashPassword());
     UserMapper.updateEntityFromDTO(user, updateUserDTO, this.passwordHasher);
     this.userRepository.save(user);
