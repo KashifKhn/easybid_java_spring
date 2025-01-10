@@ -58,12 +58,12 @@ public class ItemServiceImpl implements ItemService {
   }
 
   @Override
-  public List<ItemResponseDTO> getAllItem() {
-    final List<ItemEntity> items = this.itemRepository.findByDeletedAtIsNull();
-    final List<ItemResponseDTO> itemRes = items.stream()
+  public List<ItemResponseDTO> getFilteredItems(UUID userId, Boolean auctioned) {
+    List<ItemEntity> items = itemRepository.findItemsByUserAndAuctionStatus(userId, auctioned);
+
+    return items.stream()
         .map(ItemMapper::toItemResponseDTO)
         .collect(Collectors.toList());
-    return itemRes;
   }
 
   @Override

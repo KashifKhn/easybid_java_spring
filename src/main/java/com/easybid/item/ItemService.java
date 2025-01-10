@@ -13,7 +13,7 @@ public interface ItemService {
 
   ItemResponseDTO createItem(CreateItemDTO createItemDTO, MultipartFile[] files);
 
-  List<ItemResponseDTO> getAllItem();
+  List<ItemResponseDTO> getFilteredItems(UUID userId, Boolean auctioned);
 
   ItemResponseDTO getItemById(UUID itemId);
 
