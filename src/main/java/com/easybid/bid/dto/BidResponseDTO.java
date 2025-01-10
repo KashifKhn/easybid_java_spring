@@ -1,6 +1,6 @@
 package com.easybid.bid.dto;
 
-import com.easybid.auction.dto.AuctionResponseDTO;
+import com.easybid.auction.AuctionEntity;
 import com.easybid.common.BaseResponseDto;
 import com.easybid.user.dto.UserResponseDTO;
 
@@ -16,7 +16,7 @@ public class BidResponseDTO extends BaseResponseDto {
   private UserResponseDTO user;
 
   @Schema(description = "AuctionId associated with the bid")
-  private AuctionResponseDTO auction;
+  private AuctionEntity auction;
 
   @Schema(description = "Amount of the bid", example = "10.5")
   private Double amount;
