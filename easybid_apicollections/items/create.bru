@@ -5,9 +5,14 @@ meta {
 }
 
 post {
-  url: http://localhost:8080/api/v1/items
+  url: http://localhost:8080/api/v1/items?auctioned=false
   body: multipartForm
   auth: none
+}
+
+params:query {
+  auctioned: false
+  ~userId: 
 }
 
 body:json {
@@ -19,11 +24,11 @@ body:json {
 }
 
 body:multipart-form {
-  name: Example Item Name
-  description: Example Description
-  startingBid: 10.5
-  buyNowPrice: 1980.5
-  userId: 9a8564ec-9a51-43c1-a6c8-8e49302b145e
-  categoryId: 1fc409a3-3ba2-4cc7-bde1-d4ce28d66e08
-  files: @file(/home/zarqan-khn/mycoding/webdev/portfolio/portfolio_website/public/images/profile.jpg)
+  name: A Best Vintage watch
+  description: Most Cars sellers agree that a cars is vintage if it's at least 20–25 years old, but some may say it needs to be older, Vintage cars are known for their high-quality workmanship and build.
+  startingBid: 10000
+  buyNowPrice: 1500000
+  userId: 24905754-b53d-4ae7-8890-502ce2737827
+  categoryId: 71a582c8-5c42-4075-9982-01ee23c70106
+  files: @file(/home/zarqan-khn/Pictures/Screenshots/Screenshot From 2024-12-27 10-28-39.png|/home/zarqan-khn/Pictures/Screenshots/Screenshot From 2024-12-27 10-24-34.png|/home/zarqan-khn/Pictures/Screenshots/Screenshot From 2024-12-27 10-15-38.png)
 }
