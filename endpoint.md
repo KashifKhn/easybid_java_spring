@@ -22,7 +22,7 @@
 - `PATCH /api/v1/categories/:categoryId`: Update category details.
 - `DELETE /api/v1/categories/:categoryId`: Delete a category.
 
-#### **Item Endpoints**
+### **Item Endpoints**
 
 - `POST /api/v1/items`: Create a new item.
 - `GET /api/v1/items`: List all items (with filters and pagination).
@@ -41,7 +41,8 @@
 #### **Bid Endpoints**
 
 - `POST /api/v1/bids`: Place a bid.
-- `GET /api/v1/bids`: List bids (e.g., `?auction_id=...`).
+- `GET /api/v1/bids`: List bids.
+- `GET /api/v1/bids/{bidId}`: get bids Details.
 
 #### **Payment Endpoints**
 
