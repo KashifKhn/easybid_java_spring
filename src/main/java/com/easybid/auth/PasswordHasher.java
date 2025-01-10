@@ -1,16 +1,15 @@
 package com.easybid.auth;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-//@Component
 @Service
 public class PasswordHasher {
 
-  private final BCryptPasswordEncoder passwordEncoder;
+  private final PasswordEncoder passwordEncoder;
 
-  public PasswordHasher(final BCryptPasswordEncoder bCryptPasswordEncoder) {
-    this.passwordEncoder = bCryptPasswordEncoder;
+  public PasswordHasher(final PasswordEncoder passwordEncoder) {
+    this.passwordEncoder = passwordEncoder;
   }
 
   public String hash(final String plainPassword) {
