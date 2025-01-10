@@ -3,13 +3,10 @@ package com.easybid.auction.dto;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.easybid.enums.AuctionStatus;
 import com.easybid.enums.AuctionType;
 import com.easybid.enums.IncrementType;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -23,21 +20,15 @@ public class CreateAuctionDTO {
 
   @NotNull(message = "Auction start time must not be null")
   @Schema(description = "Start time of the Auction", example = "2024-12-25T10:00:00")
-  @FutureOrPresent(message = "Start time must be before end time.")
   private LocalDateTime startTime;
 
   @NotNull(message = "Auction end time must not be null")
   @Schema(description = "End time of the Auction", example = "2024-12-26T10:00:00")
-  @Future(message = "Start time must be before end time.")
   private LocalDateTime endTime;
 
   @NotNull(message = "Auction type must not be null")
   @Schema(description = "Type of the Auction", example = "FIXED")
   private AuctionType type;
-
-  @NotNull(message = "Auction status must not be null")
-  @Schema(description = "Status of the Auction", example = "PENDING")
-  private AuctionStatus status;
 
   @NotNull(message = "Increment type must not be null")
   @Schema(description = "Increment type for bidding", example = "AMOUNT")

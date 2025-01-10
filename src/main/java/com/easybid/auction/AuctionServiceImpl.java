@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.easybid.auction.dto.AuctionResponseDTO;
 import com.easybid.auction.dto.CreateAuctionDTO;
 import com.easybid.auction.dto.UpdateAuctionDTO;
+import com.easybid.enums.AuctionStatus;
 import com.easybid.enums.AuctionType;
 import com.easybid.enums.IncrementType;
 import com.easybid.exceptions.BadRequestException;
@@ -24,7 +26,8 @@ public class AuctionServiceImpl implements AuctionService {
   private final AuctionRepository auctionRepository;
   private final ItemService itemService;
 
-  public AuctionServiceImpl(AuctionRepository auctionRepository, ItemService itemService) {
+  public AuctionServiceImpl(AuctionRepository auctionRepository,
+      ItemService itemService) {
     this.auctionRepository = auctionRepository;
     this.itemService = itemService;
   }
@@ -39,7 +42,7 @@ public class AuctionServiceImpl implements AuctionService {
     auctionEntity.setStartTime(createAuctionDTO.getStartTime());
     auctionEntity.setEndTime(createAuctionDTO.getEndTime());
     auctionEntity.setType(createAuctionDTO.getType());
-    auctionEntity.setStatus(createAuctionDTO.getStatus());
+    auctionEntity.setStatus(AuctionStatus.PENDING);
     auctionEntity.setHighestBid(null);
     if (createAuctionDTO.getType() == AuctionType.FIXED) {
       if (createAuctionDTO.getIncrementType() == IncrementType.NONE) {
@@ -83,17 +86,23 @@ public class AuctionServiceImpl implements AuctionService {
   }
 
   @Override
-  public List<AuctionResponseDTO> getAuctions(UUID itemId, UUID userId) {
+  public List<AuctionResponseDTO> getAuctions(UUID itemId, UUID userId, UUID buyerId, Boolean winner) {
     List<AuctionEntity> auctions;
 
     if (itemId != null && userId != null) {
       auctions = auctionRepository.findByItemIdAndUserId(itemId, userId);
     } else if (itemId != null) {
-      auctions = auctionRepository.findByItemId(itemId);
+      auctions = auctionRepository.findByItemIdOrderByCreatedAtDesc(itemId);
     } else if (userId != null) {
       auctions = auctionRepository.findByItemUserId(userId);
+    } else if (itemId == null && userId == null && buyerId != null && winner != null) {
+      System.out.println("winner id " + winner);
+      System.out.println("buyer id " + buyerId);
+      auctions = auctionRepository.findAllAuctionsByBuyerAndWinnerStatus(buyerId, winner);
+    } else if (itemId == null && userId == null && buyerId != null) {
+      auctions = auctionRepository.findAllAuctionBuyerParticipate(buyerId);
     } else {
-      auctions = auctionRepository.findByDeletedAtIsNull();
+      auctions = auctionRepository.findByDeletedAtIsNullOrderByCreatedAtDesc();
     }
 
     return auctions.stream()
@@ -136,20 +145,40 @@ public class AuctionServiceImpl implements AuctionService {
         .orElseThrow(() -> new ResourceNotFoundException("Item not found for ID: " + auctionId));
   }
 
+  @Scheduled(fixedRate = 6000)
+  @Transactional
+  public void updateAuctionStatuses() {
+    var now = LocalDateTime.now();
+    var auctionsToStart = this.auctionRepository.findByStatusAndStartTimeLessThan(AuctionStatus.PENDING, now);
+    for (AuctionEntity auctionEntity : auctionsToStart) {
+      auctionEntity.setStatus(AuctionStatus.ACTIVE);
+      this.auctionRepository.save(auctionEntity);
+    }
+    var auctionsToEnd = this.auctionRepository.findByStatusAndEndTimeLessThan(AuctionStatus.ACTIVE, now);
+    for (AuctionEntity auctionEntity : auctionsToEnd) {
+      if (auctionEntity.getBids().size() <= 0) {
+        auctionEntity.setStatus(AuctionStatus.CANCELED);
+      } else {
+        auctionEntity.setStatus(AuctionStatus.COMPLETED);
+      }
+      this.auctionRepository.save(auctionEntity);
+    }
+  }
+
   private void validateAuctionDates(LocalDateTime startingTime, LocalDateTime endingTime) {
     LocalDateTime now = LocalDateTime.now();
 
     if (startingTime.isBefore(now)) {
       throw new BadRequestException("Start time must not be in the past.");
     }
-    if (endingTime.isBefore(now)) {
-      throw new BadRequestException("End time must not be in the past.");
+    if (endingTime.minusMinutes(1).isBefore(now)) {
+      throw new BadRequestException("End time must be at least 1 minutes in the future.");
     }
     if (startingTime.isAfter(endingTime)) {
       throw new BadRequestException("Start time must be before end time.");
     }
-    if (startingTime.plusMinutes(5).isAfter(endingTime)) {
-      throw new BadRequestException("The time difference between start and end must be at least 5 minutes.");
+    if (startingTime.plusMinutes(1).isAfter(endingTime)) {
+      throw new BadRequestException("The time difference between start and end must be at least 1 minutes.");
     }
   }
 }

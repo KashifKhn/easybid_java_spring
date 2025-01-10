@@ -40,8 +40,10 @@ public class AuctionController {
   @GetMapping("/auctions")
   public ResponseEntity<List<AuctionResponseDTO>> getAuctions(
       @RequestParam(value = "itemId", required = false) UUID itemId,
-      @RequestParam(value = "userId", required = false) UUID userId) {
-    List<AuctionResponseDTO> auctionRes = this.auctionService.getAuctions(itemId, userId);
+      @RequestParam(value = "userId", required = false) UUID userId,
+      @RequestParam(value = "buyerId", required = false) UUID buyerId,
+      @RequestParam(value = "winner", required = false) Boolean winner) {
+    List<AuctionResponseDTO> auctionRes = this.auctionService.getAuctions(itemId, userId, buyerId, winner);
     return ResponseEntity.ok(auctionRes);
   }
 

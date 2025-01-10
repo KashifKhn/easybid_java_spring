@@ -21,8 +21,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -41,12 +39,10 @@ public class AuctionEntity extends BaseEntity {
 
   @NotNull
   @Column(nullable = false)
-  @FutureOrPresent
   private LocalDateTime startTime;
 
   @NotNull
   @Column(nullable = false)
-  @Future
   private LocalDateTime endTime;
 
   @NotNull
